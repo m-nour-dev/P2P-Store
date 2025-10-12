@@ -1,5 +1,4 @@
-import 'dart:convert';
-
+import 'dart:convert' as convert;
 import 'package:p2p_store/features/products/data/models/product_models.dart';
 import 'package:http/http.dart' as http;
 
@@ -10,7 +9,7 @@ class ProductRemoteDataSource {
       final response = await http.get(Uri.parse('https://dummyjson.com'));
 
       if (response.statusCode == 200) {
-        final jsonData = jsonDecode(response.body) as Map<String, dynamic>;
+        final jsonData = convert.jsonDecode(response.body) as Map<String, dynamic>;
         return ProductListModel.fromJson(jsonData);
       } else {
         throw Exception('Server connection failed! ${response.statusCode}');
