@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:p2p_store/features/order/presentation/manager/address_edit_cubit.dart';
-import 'package:p2p_store/features/order/presentation/pages/order_page.dart';
+import 'package:p2p_store/features/order/presentation/pages/checkout_page.dart';
 
 class EditAddressWidget extends StatelessWidget {
   const EditAddressWidget({super.key});
@@ -23,7 +23,7 @@ class EditAddressWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 TextField(
-                  controller: OrderPage.addressController,
+                  controller: CheckoutPage.addressController,
                   decoration: InputDecoration(
                     labelText: "Address",
                     border: OutlineInputBorder(),
@@ -31,7 +31,7 @@ class EditAddressWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 TextField(
-                  controller: OrderPage.contactController,
+                  controller: CheckoutPage.contactController,
                   decoration: InputDecoration(
                     labelText: "Contact Number",
                     border: OutlineInputBorder(),
@@ -41,10 +41,10 @@ class EditAddressWidget extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     context.read<AddressEditCubit>().addreschange(
-                      OrderPage.addressController.text,
+                      CheckoutPage.addressController.text,
                     );
                     context.read<AddressEditCubit>().telchange(
-                      OrderPage.contactController.text,
+                      CheckoutPage.contactController.text,
                     );
 
                     Navigator.pop(context);

@@ -11,38 +11,40 @@ class AddressCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AddressEditCubit, AddressEditState>(
       builder: (context, state) {
-        return Card(
-          elevation: 3,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Stack(
-              children: [
-                Positioned(right: 0, top: 0, child: EditAddressWidget()),
-
-                BlocBuilder<AddressEditCubit, AddressEditState>(
-                  buildWhen: (previous, current) =>
-                      previous.address != current.address ||
-                      previous.contact != current.contact,
-                  builder: (BuildContext context, state) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 8),
-                        Text(
-                          "Address :",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(height: 4),
-                        Text(state.address),
-                        Text("Contact : ${state.contact}"),
-                      ],
-                    );
-                  },
-                ),
-              ],
+        return Expanded(
+          child: Card(
+            elevation: 3,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Stack(
+                children: [
+                  Positioned(right: 0, top: 0, child: EditAddressWidget()),
+          
+                  BlocBuilder<AddressEditCubit, AddressEditState>(
+                    buildWhen: (previous, current) =>
+                        previous.address != current.address ||
+                        previous.contact != current.contact,
+                    builder: (BuildContext context, state) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 8),
+                          Text(
+                            "Address :",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 4),
+                          Text(state.address),
+                          Text("Contact : ${state.contact}"),
+                        ],
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         );

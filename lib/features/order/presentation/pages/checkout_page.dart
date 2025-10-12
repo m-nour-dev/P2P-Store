@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:p2p_store/features/order/presentation/pages/product_list_page.dart';
+import 'package:p2p_store/features/order/presentation/pages/shoping_bag.dart';
 import 'package:p2p_store/features/order/presentation/widgets/add_new_adsress_widget.dart';
 import 'package:p2p_store/features/order/presentation/widgets/address_card_widget.dart';
 
-class OrderPage extends StatelessWidget {
-  const OrderPage({super.key});
+class CheckoutPage extends StatelessWidget {
+  const CheckoutPage({super.key});
   static final addressController = TextEditingController();
   static final contactController = TextEditingController();
   @override
@@ -11,7 +13,7 @@ class OrderPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Checkout'), centerTitle: true),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -38,18 +40,31 @@ class OrderPage extends StatelessWidget {
             ),
 
             SizedBox(height: 15),
-            Text(
-              "Shopping List",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Stack(
+              children: [
+                Text(
+                  "Shopping List",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ShopingBag(),
+                          ),
+                        );
+                      },
+                      icon: Icon(Icons.shopping_cart_checkout),
+                    ),
+                  ],
+                ),
+              ],
             ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: 1,
-                itemBuilder: (context, index) {
-                  return ListTile(title: Text('eklene esyalar burda olacak'));
-                },
-              ),
-            ),
+            Expanded(child: ProductListPage()),
           ],
         ),
       ),
