@@ -12,12 +12,12 @@ class ResponseStatusCubit extends Cubit<ResponseStatusState> {
         ));
 
   Future<void> fetchProducts() async {
-    emit(state.copyWith(isLoading: true));
+    emit(state.copyWith(isLoading: true, errorMessage: ''));
     try {
       final products = await _remoteDataSource.getProducts();
-      emit(state.copyWith(productList: products));
+      emit(state.copyWith(isLoading: false, productList: products));
     } catch (e) {
-      emit(state.copyWith(errorMessage: e.toString()));
+      emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
     }
   }
 }
