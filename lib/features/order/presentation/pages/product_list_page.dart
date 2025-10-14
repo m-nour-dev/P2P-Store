@@ -13,7 +13,7 @@ class ProductListPage extends StatelessWidget {
       body: BlocBuilder<ProductCubit, ProductState>(
         builder: (context, state) {
           return ListView.builder(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(4.0),
             itemCount: state.products.length,
             itemBuilder: (context, index) {
               return ProductCardWidget();

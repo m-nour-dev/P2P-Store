@@ -16,7 +16,11 @@ class ProductCardWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: BlocBuilder<ProductCubit, ProductState>(
+          buildWhen: (previous, current) =>
+              previous.selected != current.selected ||
+              previous.favorite != current.favorite,
           builder: (BuildContext context, ProductState state) {
+            // burda ilk urunu aliyor
             final ProductModel product = state.products.first;
             return Row(
               children: [
@@ -79,32 +83,28 @@ class ProductCardWidget extends StatelessWidget {
                     ],
                   ),
                 ),
-                Stack(
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            context.read<ProductCubit>().toggleFavorite();
-                          },
-                          icon: Icon(Icons.favorite),
-                          color: state.favorit ? Colors.red : Colors.grey,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                context.read<ProductCubit>().shopProducts(
-                                  product,
-                                );
-                              },
-                              icon: Icon(Icons.check_circle_rounded),
-                            ),
-                          ],
-                        ),
-                      ],
+                    IconButton(
+                      onPressed: () {
+                        context.read<ProductCubit>().toggleFavoriteStatus(
+                          product,
+                        );
+                      },
+                      icon: Icon(Icons.favorite),
+                      color: state.favorite ? Colors.red : Colors.black26,
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        context.read<ProductCubit>().toggleSelectedStatus(
+                          product,
+                        );
+                      },
+                      icon: Icon(
+                        state.selected ? Icons.check_circle : Icons.add_circle,
+                      ),
+                      color: state.selected ? Colors.green : Colors.grey,
                     ),
                   ],
                 ),

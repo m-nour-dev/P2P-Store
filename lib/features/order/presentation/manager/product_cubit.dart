@@ -4,12 +4,15 @@ import 'product_state.dart';
 
 class ProductCubit extends Cubit<ProductState> {
   ProductCubit()
-    : super(ProductState(products: [], shopProducts: [], favorit: false));
-
-  void addProduct(ProductModel product) {
-    final updated = List<ProductModel>.from(state.products)..add(product);
-    emit(state.copyWith(products: updated));
-  }
+    : super(
+        ProductState(
+          products: [],
+          shopProducts: [],
+          favorite: false,
+          selected: false,
+          favoriteProducts: [],
+        ),
+      );
 
   void loadSampleProducts() {
     emit(
@@ -42,14 +45,56 @@ class ProductCubit extends Cubit<ProductState> {
     );
   }
 
-  void shopProducts(final ProductModel shopping) {
-    final List<ProductModel> newShoppingList = List.from(state.shopProducts);
-    newShoppingList.add(shopping);
-    emit(state.copyWith(shopProducts: newShoppingList));
+  void addProductToFavorites(ProductModel product) {
+    final updated = List<ProductModel>.from(state.favoriteProducts)
+      ..add(product);
+    emit(state.copyWith(favoriteProducts: updated));
   }
 
-  void toggleFavorite() {
-    emit(state.copyWith(favorit: !state.favorit));
+  void removeProductFromFavorites(ProductModel product) {
+    final updated = List<ProductModel>.from(state.favoriteProducts)
+      ..remove(product);
+    emit(state.copyWith(favoriteProducts: updated));
+  }
+
+  void addProductToCart(ProductModel product) {
+    final updated = List<ProductModel>.from(state.shopProducts)..add(product);
+    emit(state.copyWith(shopProducts: updated));
+  }
+
+  void removeProductFromCart(ProductModel product) {
+    final updated = List<ProductModel>.from(state.shopProducts)
+      ..removeWhere((p) => p.name == product.name); // Use a unique property
+    emit(state.copyWith(shopProducts: updated));
+  }
+
+  void toggleFavoriteStatus(ProductModel product) {
+    final bool isCurrentlyFavorite = state.favoriteProducts.contains(product);
+    List<ProductModel> updatedList = List.from(state.favoriteProducts);
+    if (isCurrentlyFavorite) {
+      updatedList.remove(product);
+    } else {
+      updatedList.add(product);
+    }
+    emit(
+      state.copyWith(
+        favorite: !isCurrentlyFavorite,
+        favoriteProducts: updatedList,
+      ),
+    );
+  }
+
+  void toggleSelectedStatus(ProductModel product) {
+    final bool isCurrentlySelected = state.shopProducts.contains(product);
+    List<ProductModel> updatedList = List.from(state.shopProducts);
+    if (isCurrentlySelected) {
+      updatedList.remove(product);
+    } else {
+      updatedList.add(product);
+    }
+    emit(
+      state.copyWith(selected: !isCurrentlySelected, shopProducts: updatedList),
+    );
   }
 
   double get total =>

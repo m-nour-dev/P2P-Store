@@ -8,54 +8,57 @@ class EditAddressWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: const Icon(Icons.edit, size: 20),
-      onPressed: () {
-        showModalBottomSheet(
-          context: context,
-          builder: (BuildContext context) {
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  "Edit Address",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 12),
-                TextField(
-                  controller: CheckoutPage.addressController,
-                  decoration: InputDecoration(
-                    labelText: "Address",
-                    border: OutlineInputBorder(),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: IconButton(
+        icon: const Icon(Icons.edit, size: 20),
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (BuildContext context) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "Edit Address",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                ),
-                const SizedBox(height: 12),
-                TextField(
-                  controller: CheckoutPage.contactController,
-                  decoration: InputDecoration(
-                    labelText: "Contact Number",
-                    border: OutlineInputBorder(),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: CheckoutPage.addressController,
+                    decoration: InputDecoration(
+                      labelText: "Address",
+                      border: OutlineInputBorder(),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () {
-                    context.read<AddressEditCubit>().addreschange(
-                      CheckoutPage.addressController.text,
-                    );
-                    context.read<AddressEditCubit>().telchange(
-                      CheckoutPage.contactController.text,
-                    );
-
-                    Navigator.pop(context);
-                  },
-                  child: const Text("Save"),
-                ),
-              ],
-            );
-          },
-        );
-      },
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: CheckoutPage.contactController,
+                    decoration: InputDecoration(
+                      labelText: "Contact Number",
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () {
+                      context.read<AddressEditCubit>().addreschange(
+                        CheckoutPage.addressController.text,
+                      );
+                      context.read<AddressEditCubit>().telchange(
+                        CheckoutPage.contactController.text,
+                      );
+      
+                      Navigator.pop(context);
+                    },
+                    child: const Text("Save"),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

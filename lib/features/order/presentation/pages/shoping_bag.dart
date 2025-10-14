@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:p2p_store/core/constants/strip_keys.dart';
+import 'package:p2p_store/features/order/presentation/manager/payment_manager.dart';
+import 'package:p2p_store/features/order/presentation/pages/favorite_page.dart';
 import '../manager/product_cubit.dart';
 import '../manager/product_state.dart';
 
@@ -9,7 +13,21 @@ class ShopingBag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Shopping Bag"), centerTitle: true,actions: [IconButton(onPressed: (){}, icon: Icon(Icons.favorite_border))],),
+      appBar: AppBar(
+        title: const Text("Shopping Bag"),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const FavoritePage()),
+              );
+            },
+            icon: Icon(Icons.favorite_border),
+          ),
+        ],
+      ),
       body: BlocBuilder<ProductCubit, ProductState>(
         builder: (context, state) {
           if (state.shopProducts.isEmpty) {
@@ -63,7 +81,7 @@ class ShopingBag extends StatelessWidget {
                   ],
                 ),
 
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
 
                 // 💸 Coupon section
                 Container(
@@ -106,14 +124,14 @@ class ShopingBag extends StatelessWidget {
                       const SizedBox(height: 10),
                       _priceRow(
                         "Order Amounts",
-                        "₹ ${total.toStringAsFixed(2)}",
+                        "USD ${total.toStringAsFixed(2)}",
                       ),
                       _priceRow("Convenience", "Apply Coupon", highlight: true),
                       _priceRow("Delivery Fee", "Free", free: true),
                       const Divider(),
                       _priceRow(
                         "Order Total",
-                        "₹ ${total.toStringAsFixed(2)}",
+                        "USD ${total.toStringAsFixed(2)}",
                         bold: true,
                       ),
                     ],
@@ -136,7 +154,7 @@ class ShopingBag extends StatelessWidget {
               builder: (context, state) {
                 final total = context.read<ProductCubit>().total;
                 return Text(
-                  "₹ ${total.toStringAsFixed(2)}",
+                  "USD ${total.toStringAsFixed(2)}",
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -146,7 +164,8 @@ class ShopingBag extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                // ödeme sayfasına yönlendir
+                Stripe.publishableKey = ApiKeys.publishable_key;
+                PaymentManager.makePayment(89, "USD");
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.red,
