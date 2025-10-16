@@ -12,7 +12,6 @@ class HomePage extends StatelessWidget {
     return BlocProvider(
       create: (_) => ResponseStatusCubit(ProductRemoteDataSource())..fetchProducts(),
       child: Scaffold(
-        appBar: AppBar(title: const Text('قائمة المنتجات')),
         body: BlocBuilder<ResponseStatusCubit, ResponseStatusState>(
           builder: (context, state) {
             if (state.isLoading) {
