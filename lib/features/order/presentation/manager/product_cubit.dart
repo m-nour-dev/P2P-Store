@@ -6,14 +6,14 @@ class ProductCubit extends Cubit<ProductState> {
   ProductCubit()
     : super(
         ProductState(
+          myOldRequests: [],
           products: [],
           shopProducts: [],
-          favorite: false,
           selected: false,
-          favoriteProducts: [],
         ),
       );
 
+  // bunu kaldirmam gerekiyor cunku m.nurdan gelen productler burda olacak
   void loadSampleProducts() {
     emit(
       state.copyWith(
@@ -45,43 +45,21 @@ class ProductCubit extends Cubit<ProductState> {
     );
   }
 
-  void addProductToFavorites(ProductModel product) {
-    final updated = List<ProductModel>.from(state.favoriteProducts)
-      ..add(product);
-    emit(state.copyWith(favoriteProducts: updated));
-  }
-
-  void removeProductFromFavorites(ProductModel product) {
-    final updated = List<ProductModel>.from(state.favoriteProducts)
-      ..remove(product);
-    emit(state.copyWith(favoriteProducts: updated));
-  }
-
   void addProductToCart(ProductModel product) {
     final updated = List<ProductModel>.from(state.shopProducts)..add(product);
     emit(state.copyWith(shopProducts: updated));
   }
 
-  void removeProductFromCart(ProductModel product) {
-    final updated = List<ProductModel>.from(state.shopProducts)
-      ..removeWhere((p) => p.name == product.name); // Use a unique property
-    emit(state.copyWith(shopProducts: updated));
+  // benim yaptigim eski talepler
+  void addProductToMyOldRequests() {
+   // final updated = List<ProductModel>.from(state.shopProducts)..add(product);
+    emit(state.copyWith(myOldRequests: state.shopProducts, shopProducts: []));
   }
+  // bu fonkisyonu shoping listesinde silinecek urun icin kullaniilir
 
-  void toggleFavoriteStatus(ProductModel product) {
-    final bool isCurrentlyFavorite = state.favoriteProducts.contains(product);
-    List<ProductModel> updatedList = List.from(state.favoriteProducts);
-    if (isCurrentlyFavorite) {
-      updatedList.remove(product);
-    } else {
-      updatedList.add(product);
-    }
-    emit(
-      state.copyWith(
-        favorite: !isCurrentlyFavorite,
-        favoriteProducts: updatedList,
-      ),
-    );
+  void removeProductFromCart(ProductModel product) {
+    state.products.remove(product);
+    emit(state.copyWith(products: state.products));
   }
 
   void toggleSelectedStatus(ProductModel product) {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:p2p_store/features/order/presentation/pages/product_list_page.dart';
 import 'package:p2p_store/features/order/presentation/pages/shoping_bag.dart';
-import 'package:p2p_store/features/order/presentation/widgets/add_new_adsress_widget.dart';
 import 'package:p2p_store/features/order/presentation/widgets/address_card_widget.dart';
 
 class CheckoutPage extends StatelessWidget {
@@ -32,10 +31,6 @@ class CheckoutPage extends StatelessWidget {
             Row(
               children: [
                 Expanded(child: Row(children: [AddressCardWidget()])),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [AddNewAdsressWidget()],
-                ),
               ],
             ),
 

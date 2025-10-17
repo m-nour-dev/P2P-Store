@@ -16,9 +16,9 @@ class ProductCardWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: BlocBuilder<ProductCubit, ProductState>(
-          buildWhen: (previous, current) =>
-              previous.selected != current.selected ||
-              previous.favorite != current.favorite,
+           buildWhen: (previous, current) =>
+               previous.selected != current.selected ||
+               previous.shopProducts != current.shopProducts,
           builder: (BuildContext context, ProductState state) {
             // burda ilk urunu aliyor
             final ProductModel product = state.products.first;
@@ -88,15 +88,6 @@ class ProductCardWidget extends StatelessWidget {
                   children: [
                     IconButton(
                       onPressed: () {
-                        context.read<ProductCubit>().toggleFavoriteStatus(
-                          product,
-                        );
-                      },
-                      icon: Icon(Icons.favorite),
-                      color: state.favorite ? Colors.red : Colors.black26,
-                    ),
-                    IconButton(
-                      onPressed: () {
                         context.read<ProductCubit>().toggleSelectedStatus(
                           product,
                         );
@@ -105,6 +96,14 @@ class ProductCardWidget extends StatelessWidget {
                         state.selected ? Icons.check_circle : Icons.add_circle,
                       ),
                       color: state.selected ? Colors.green : Colors.grey,
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        context.read<ProductCubit>().removeProductFromCart(
+                          product,
+                        );
+                      },
+                      icon: Icon(Icons.delete),
                     ),
                   ],
                 ),

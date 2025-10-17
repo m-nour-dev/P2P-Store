@@ -3,28 +3,49 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:p2p_store/features/order/data/models/product_model.dart';
 import 'package:p2p_store/features/order/presentation/manager/product_cubit.dart';
 import 'package:p2p_store/features/order/presentation/manager/product_state.dart';
+import 'package:p2p_store/features/order/presentation/pages/checkout_page.dart';
 
-class FavoritePage extends StatelessWidget {
-  const FavoritePage({super.key});
+class MyOldRequests extends StatelessWidget {
+  const MyOldRequests({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('My Favorites'), centerTitle: true),
+      appBar: AppBar(
+        title: const Text('My Old Requests '),
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            // Navigator.pop(context); yerine özel bir yönlendirme kullanın.
+
+            // 1. İstenen Sayfaya Gitme ve Önceki Rotaları Temizleme
+            // Bu yöntem, kullanıcıyı direkt olarak belirttiğiniz sayfaya (HomePage) götürür
+            // ve geri kalan tüm sayfaları bellekten siler.
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const CheckoutPage(),
+              ), // DÖNÜLMEK İSTENEN SAYFA
+              (Route<dynamic> route) => false, // Tüm rotaları kaldır.
+            );
+          },
+        ),
+      ),
 
       body: BlocBuilder<ProductCubit, ProductState>(
         buildWhen: (previous, current) =>
-            previous.favoriteProducts != current.favoriteProducts,
+            previous.myOldRequests != current.myOldRequests,
         builder: (BuildContext context, ProductState state) {
-          if (state.favoriteProducts.isEmpty) {
-            return const Center(child: Text("favorite Not found"));
+          if (state.myOldRequests.isEmpty) {
+            return const Center(child: Text(" Old Requests Not Fonud"));
           }
 
           return ListView.builder(
             padding: const EdgeInsets.all(8.0),
-            itemCount: state.favoriteProducts.length,
+            itemCount: state.myOldRequests.length,
             itemBuilder: (context, index) {
-              final ProductModel product = state.favoriteProducts[index];
+              final ProductModel product = state.myOldRequests[index];
               return Card(
                 margin: const EdgeInsets.symmetric(vertical: 8),
                 elevation: 3,
@@ -91,22 +112,6 @@ class FavoritePage extends StatelessWidget {
                             ),
                           ],
                         ),
-                      ),
-
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: IconButton(
-                          onPressed: () {
-                            context.read<ProductCubit>().toggleFavoriteStatus(
-                              product,
-                            );
-                          },
-                          icon: Icon(
-                            Icons.favorite,
-                            color: state.favorite ? Colors.red : Colors.black26,
-                          ),
-                        ),
-                        
                       ),
                     ],
                   ),

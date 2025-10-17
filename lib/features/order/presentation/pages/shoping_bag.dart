@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:p2p_store/core/constants/app_constant.dart';
 import 'package:p2p_store/core/constants/strip_keys.dart';
 import 'package:p2p_store/features/order/presentation/manager/payment_manager.dart';
-import 'package:p2p_store/features/order/presentation/pages/favorite_page.dart';
+import 'package:p2p_store/features/order/presentation/pages/payment_failed_page.dart';
+import 'package:p2p_store/features/order/presentation/pages/payment_success_page.dart';
 import '../manager/product_cubit.dart';
 import '../manager/product_state.dart';
 
@@ -19,10 +21,12 @@ class ShopingBag extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const FavoritePage()),
-              );
+
+              // m.nur yaptigi favorite page gidecek
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => const FavoritePage()),
+              // );
             },
             icon: Icon(Icons.favorite_border),
           ),
@@ -37,7 +41,7 @@ class ShopingBag extends StatelessWidget {
           final total = context.read<ProductCubit>().total;
 
           return Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(AppConstants.defaultPadding),
             child: Column(
               children: [
                 // 🛍️ Product card
@@ -163,9 +167,29 @@ class ShopingBag extends StatelessWidget {
               },
             ),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 Stripe.publishableKey = ApiKeys.publishable_key;
-                PaymentManager.makePayment(89, "USD");
+
+                bool result = await PaymentManager.makePayment(context.read<ProductCubit>().total.toInt(), "USD");
+
+                if (!context.mounted) return;
+
+                if (result) {
+                  
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PaymentSuccessPage(),
+                    ),
+                  );
+                } else {
+                   Navigator.push(
+                     context,
+                     MaterialPageRoute(
+                       builder: (context) => const PaymentFailedPage(),
+                     ),
+                   );
+                }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.red,

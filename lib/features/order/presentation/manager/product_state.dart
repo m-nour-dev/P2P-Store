@@ -3,28 +3,24 @@ import 'package:p2p_store/features/order/data/models/product_model.dart';
 class ProductState {
   final List<ProductModel> products;
   final List<ProductModel> shopProducts;
-  final List<ProductModel> favoriteProducts;
+  final List<ProductModel> myOldRequests;
   final bool selected;
-  final bool favorite;
   ProductState({
-    required this.favoriteProducts,
+    required this.myOldRequests,
     required this.products,
     required this.shopProducts,
-    required this.favorite    ,
     required this.selected,
   });
 
   ProductState copyWith({
     List<ProductModel>? products,
-    List<ProductModel>? favoriteProducts,
     List<ProductModel>? shopProducts,
+    List<ProductModel>? myOldRequests,
     bool? selected,
-    bool? favorite,
   }) {
     return ProductState(
-      favoriteProducts: favoriteProducts ?? this.favoriteProducts,
+      myOldRequests: myOldRequests ?? this.myOldRequests,
       selected: selected ?? this.selected,
-      favorite: favorite ?? this.favorite ,
       products: products ?? this.products,
       shopProducts: shopProducts ?? this.shopProducts,
     );
