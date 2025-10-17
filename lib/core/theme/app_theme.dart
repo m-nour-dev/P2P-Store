@@ -16,9 +16,12 @@ class AppTheme {
     colorScheme: ColorScheme.light(
       primary: AppColors.primary,
       secondary: AppColors.secondry,
+      tertiary: Colors.black,
+      onPrimaryContainer: AppColors.myPrimaryContainer,
       error: AppColors.error,
     ),
   );
+
   static final darkTheme = ThemeData(
     brightness: Brightness.dark,
     primaryColor: AppColors.primary,
@@ -33,6 +36,8 @@ class AppTheme {
     colorScheme: ColorScheme.dark(
       primary: AppColors.primary,
       secondary: AppColors.secondry,
+      tertiary: Colors.white,
+      onPrimaryContainer: AppColors.myDarkPrimaryContainer,
       error: AppColors.error,
     ),
   );

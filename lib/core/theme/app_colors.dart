@@ -5,6 +5,8 @@ class AppColors {
   static const Color secondry = Color(0xFF42A5F5);
   static const Color background = Color.fromRGBO(243, 239, 239, 1);
   static const Color darkModeBackground = Color.fromRGBO(18, 32, 49, 1);
+  static const Color myPrimaryContainer = Colors.white;
+  static const Color myDarkPrimaryContainer =Color.fromARGB(255, 21, 18, 33);
   static const Color text = Colors.black; 
   static const Color darkModeText = Colors.white; 
   static const Color success = Colors.green;
