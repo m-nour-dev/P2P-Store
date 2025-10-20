@@ -19,4 +19,23 @@ class ProductRemoteDataSource {
       throw Exception('Error while fethcing data! $e');
     }
   }
+  
+//get products by category
+Future<ProductListModel> getProductsByCategory(String category) async {
+  try {
+    final response = await http.get(
+      Uri.parse('${AppConstants.baseUrl}/products/category/$category'),
+    );
+
+    if (response.statusCode == 200) {
+      final jsonData = convert.jsonDecode(response.body) as Map<String, dynamic>;
+      return ProductListModel.fromJson(jsonData);
+    } else {
+      throw Exception('Failed to load category products');
+    }
+  } catch (e) {
+    throw Exception('Error while fetching category products: $e');
+  }
+}
+
 }

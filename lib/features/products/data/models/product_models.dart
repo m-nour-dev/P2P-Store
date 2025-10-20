@@ -31,7 +31,7 @@ class Product {
   final String? warrantyInformation;
   final String? shippingInformation;
   final String? availabilityStatus;
-  final List<Review>? reviews;
+   List<Review>? reviews;
   final String? returnPolicy;
   final int? minimumOrderQuantity;
   final Meta? meta;
@@ -55,7 +55,7 @@ class Product {
     this.warrantyInformation,
     this.shippingInformation,
     this.availabilityStatus,
-    this.reviews,
+    this.reviews = const [],
     this.returnPolicy,
     this.minimumOrderQuantity,
     this.meta,
@@ -83,9 +83,8 @@ class Product {
       warrantyInformation: json['warrantyInformation'],
       shippingInformation: json['shippingInformation'],
       availabilityStatus: json['availabilityStatus'],
-      reviews: (json['reviews'] as List?)
-          ?.map((e) => Review.fromJson(e))
-          .toList(),
+      reviews:
+          (json['reviews'] as List?)?.map((e) => Review.fromJson(e)).toList(),
       returnPolicy: json['returnPolicy'],
       minimumOrderQuantity: json['minimumOrderQuantity'],
       meta: json['meta'] != null ? Meta.fromJson(json['meta']) : null,

@@ -39,48 +39,51 @@ class SummerOffersCard extends StatelessWidget {
                         bottomStart: Radius.circular(12))),
                 height: 50,
                 alignment: Alignment.center,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 12),
-                          child: Text(
-                            "New Arrivals ",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 12),
+                            child: Text(
+                              "New Arrivals ",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 18),
+                            ),
                           ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 12),
-                          child: Text(
-                            "Summer’ 25 Collections",
-                            style: TextStyle(fontSize: 14),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 12),
+                            child: Text(
+                              "Summer’ 25 Collections",
+                              style: TextStyle(fontSize: 14),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: ElevatedButton.icon(
-                        onPressed: () {},
-                        icon: Icon(Icons.arrow_forward_outlined),
-                        label: const Text('View all'),
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(horizontal: 6),
-                          backgroundColor: AppColors.primary,
-                          foregroundColor: Colors.white,
-                          iconAlignment: IconAlignment.end,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(6),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: ElevatedButton.icon(
+                          onPressed: () {},
+                          icon: Icon(Icons.arrow_forward_outlined),
+                          label: const Text('View all'),
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(horizontal: 6),
+                            backgroundColor: AppColors.primary,
+                            foregroundColor: Colors.white,
+                            iconAlignment: IconAlignment.end,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             )

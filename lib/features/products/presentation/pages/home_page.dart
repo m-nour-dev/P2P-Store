@@ -62,13 +62,9 @@ class HomePage extends StatelessWidget {
                   ),
                   SizedBox(height: 5),
                   CategoryRow(),
-                  SizedBox(
-                    height: 5,
-                  ),
+                  SizedBox(height: 5),
                   DealCard(),
-                  SizedBox(
-                    height: 5,
-                  ),
+                  SizedBox(height: 5),
                   DealOfTheDay(),
                   SizedBox(height: 290, child: ProductListHorizontal()),
                   SizedBox(height: 10),

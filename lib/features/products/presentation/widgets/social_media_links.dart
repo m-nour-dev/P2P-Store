@@ -42,34 +42,37 @@ class SocialMediaLinks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        _buildIcon(
-          icon: FontAwesomeIcons.whatsapp,
-          color: const Color(0xFF25D366),
-          url: 'https://wa.me/+905528053933',
-        ),
-        _buildIcon(
-          icon: FontAwesomeIcons.facebookF,
-          color: const Color(0xFF1877F2),
-          url: 'https://facebook.com/YOUR_PAGE',
-        ),
-        _buildIcon(
-          icon: FontAwesomeIcons.instagram,
-          color: const Color(0xFFE4405F),
-          url: 'https://instagram.com/m6nur',
-        ),
-        _buildIcon(
-          icon: FontAwesomeIcons.linkedinIn,
-          color: const Color(0xFF0077B5),
-          url: 'https://linkedin.com/in/almasto',
-        ),
-        _buildIcon(
-          icon: FontAwesomeIcons.github,
-          color: Colors.black,
-          url: 'https://github.com/m-nour-dev',
-        ),
-      ],
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          _buildIcon(
+            icon: FontAwesomeIcons.whatsapp,
+            color: const Color(0xFF25D366),
+            url: 'https://wa.me/+905528053933',
+          ),
+          _buildIcon(
+            icon: FontAwesomeIcons.facebookF,
+            color: const Color(0xFF1877F2),
+            url: 'https://facebook.com/Mo Nur',
+          ),
+          _buildIcon(
+            icon: FontAwesomeIcons.instagram,
+            color: const Color(0xFFE4405F),
+            url: 'https://instagram.com/m6nur',
+          ),
+          _buildIcon(
+            icon: FontAwesomeIcons.linkedinIn,
+            color: const Color(0xFF0077B5),
+            url: 'https://linkedin.com/in/almasto',
+          ),
+          _buildIcon(
+            icon: FontAwesomeIcons.github,
+            color: Colors.black,
+            url: 'https://github.com/m-nour-dev',
+          ),
+        ],
+      ),
     );
   }
 }

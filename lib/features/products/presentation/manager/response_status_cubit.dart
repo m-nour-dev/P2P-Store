@@ -20,4 +20,16 @@ class ResponseStatusCubit extends Cubit<ResponseStatusState> {
       emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
     }
   }
+
+  //fethc products by category
+  Future<void> fetchProductsByCategory(String category) async {
+    emit(state.copyWith(isLoading: true, errorMessage: ''));
+    try {
+      final products = await _remoteDataSource.getProductsByCategory(
+          category);
+      emit(state.copyWith(isLoading: false, productList: products));
+    } catch (e) {
+      emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
+    }
+  }
 }

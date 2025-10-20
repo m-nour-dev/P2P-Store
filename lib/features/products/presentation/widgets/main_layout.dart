@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:p2p_store/features/products/presentation/manager/navigation_cubit.dart';
+import 'package:p2p_store/features/products/presentation/manager/toggle_favorite_cart_cubit.dart';
 import 'package:p2p_store/features/products/presentation/pages/home_page.dart';
+import 'package:p2p_store/features/products/presentation/pages/product_details_page.dart';
 import 'package:p2p_store/features/products/presentation/pages/search_page.dart';
 import 'package:p2p_store/features/products/presentation/pages/test_cart_page.dart';
 import 'package:p2p_store/features/products/presentation/pages/test_profile_page.dart';
@@ -16,28 +18,32 @@ class MainLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     final pages = const [
       HomePage(),
-      SearchPage(),
+      WishlistPage(),
       TestCartPage(),
+      SearchPage(selectedCategory: 'all'),
       TestProfilePage(),
-      WishlistPage()
+      
     ];
     final pageController = PageController();
 
     return BlocProvider(
-      create: (context) => NavigationCubit(),
-      child: Builder(
-        builder: (context) => Scaffold(
-            appBar: CostumAppBar(),
-            body: PageView(
-              controller: pageController,
-              onPageChanged: (index) =>
-                  context.read<NavigationCubit>().changePage(index),
-              children: pages,
-            ),
-            bottomNavigationBar: BlocBuilder<NavigationCubit, int>(builder: (context, currentIndex) =>CostumBottomNavigationBar(
-                  pageController: pageController,
-                  currentIndex: currentIndex),
-            )),
+      create: (context) => ToggleFavoriteCartCubit(),
+      child: BlocProvider(
+        create: (context) => NavigationCubit(),
+        child: Builder(
+          builder: (context) => Scaffold(
+              appBar: CostumAppBar(),
+              body: PageView(
+                controller: pageController,
+                onPageChanged: (index) =>
+                    context.read<NavigationCubit>().changePage(index),
+                children: pages,
+              ),
+              bottomNavigationBar: BlocBuilder<NavigationCubit, int>(
+                builder: (context, currentIndex) => CostumBottomNavigationBar(
+                    pageController: pageController, currentIndex: currentIndex),
+              )),
+        ),
       ),
     );
   }
