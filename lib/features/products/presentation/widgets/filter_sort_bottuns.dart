@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class FilterSortBottuns extends StatelessWidget {
   const FilterSortBottuns(
       {super.key, required this.myLabel, required this.myIcon});
-  final Text myLabel;
+  final String myLabel;
   final Icon myIcon;
   @override
   Widget build(BuildContext context) {
@@ -12,10 +12,10 @@ class FilterSortBottuns extends StatelessWidget {
         child: ElevatedButton.icon(
           onPressed: () {},
           label: Text(
-            'filter',
+            myLabel,
             style: TextStyle(fontSize: 12),
           ),
-          icon: Icon(Icons.filter_alt, size: 14),
+          icon: myIcon,
           style: ElevatedButton.styleFrom(
               backgroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
               foregroundColor: Colors.grey,

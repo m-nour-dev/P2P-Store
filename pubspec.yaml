@@ -11,6 +11,8 @@ dependencies:
     sdk: flutter
   http: ^1.5.0
   flutter_bloc: ^8.1.3
+  url_launcher: ^6.3.2
+  font_awesome_flutter: ^10.11.0
 
 dev_dependencies:
   flutter_test:
@@ -21,3 +23,42 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/P2P_logo.png
+    - assets/images/categories/all.jpg
+    - assets/images/categories/beauty.jpg
+    - assets/images/categories/mens-shirts.jpeg
+    - assets/images/categories/laptops.jpeg
+    - assets/images/categories/home-decoration.jpeg
+    - assets/images/categories/womens-jewellery.jpeg
+    - assets/images/categories/mens-watches.jpeg
+    - assets/images/categories/fragrances.jpeg
+    - assets/images/categories/furniture.jpeg
+    - assets/images/categories/groceries.jpg
+    - assets/images/categories/kitchen-accessories.jpg
+    - assets/images/categories/mens-shoes.webp
+    - assets/images/categories/mobile-accessories.jpeg
+    - assets/images/categories/motorcycle.jpeg
+    - assets/images/categories/skin-care.jpeg
+    - assets/images/categories/smartphones.webp
+    - assets/images/categories/sports-accessories.jpeg
+    - assets/images/categories/sunglasses.webp
+    - assets/images/categories/tablets.jpeg
+    - assets/images/categories/vehicle.jpeg
+    - assets/images/categories/womens-bags.jpg
+    - assets/images/categories/womens-dresses.jpg
+    - assets/images/categories/womens-shoes.jpeg
+    - assets/images/categories/womens-watches.jpeg
+    - assets/images/deals_removed_bg.png
+    - assets/images/offers.png
+    - assets/images/rewards.png
+    - assets/images/summer_offers.png
+    - assets/images/sponsered_add.png
+    - assets/images/bar1.png
+    - assets/images/bar2.png
+    - assets/images/bar3.png
+    - assets/images/bar4.png
+    - assets/images/axess.png
+    - assets/images/kuveyt-turk.png
+    - assets/images/master-card.png
+    - assets/images/paraf.png
+    - assets/images/troy.png
+    - assets/images/visa.png
