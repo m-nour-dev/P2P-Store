@@ -1,0 +1,246 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:p2p_store/core/constants/app_constant.dart';
+import 'package:p2p_store/core/constants/strip_keys.dart';
+import 'package:p2p_store/features/order/presentation/manager/payment_manager.dart';
+import 'package:p2p_store/features/order/presentation/pages/payment_failed_page.dart';
+import 'package:p2p_store/features/order/presentation/pages/payment_success_page.dart';
+import '../manager/product_cubit.dart';
+import '../manager/product_state.dart';
+
+class ShopingBag extends StatelessWidget {
+  const ShopingBag({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Shopping Bag"),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {
+
+              // m.nur yaptigi favorite page gidecek
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => const FavoritePage()),
+              // );
+            },
+            icon: Icon(Icons.favorite_border),
+          ),
+        ],
+      ),
+      body: BlocBuilder<ProductCubit, ProductState>(
+        builder: (context, state) {
+          if (state.shopProducts.isEmpty) {
+            return const Center(child: Text("No items in cart"));
+          }
+          final product = state.shopProducts.first;
+          final total = context.read<ProductCubit>().total;
+
+          return Padding(
+            padding: const EdgeInsets.all(AppConstants.defaultPadding),
+            child: Column(
+              children: [
+                // 🛍️ Product card
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Image.network(
+                      product.imageUrl,
+                      height: 100,
+                      width: 100,
+                      fit: BoxFit.cover,
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            product.name,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text("Qty: ${product.quantity}"),
+                          Text(
+                            " ${product.price.toStringAsFixed(2)}",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          const Text(
+                            "Delivery by 10 May 20XX",
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 10),
+
+                // 💸 Coupon section
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey.shade300),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      Text("Apply Coupons"),
+                      Text(
+                        "Select",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                // 🧾 Order details
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey.shade300),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Order Payment Details",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 10),
+                      _priceRow(
+                        "Order Amounts",
+                        "USD ${total.toStringAsFixed(2)}",
+                      ),
+                      _priceRow("Convenience", "Apply Coupon", highlight: true),
+                      _priceRow("Delivery Fee", "Free", free: true),
+                      const Divider(),
+                      _priceRow(
+                        "Order Total",
+                        "USD ${total.toStringAsFixed(2)}",
+                        bold: true,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+
+      // 🛒 Bottom bar
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.all(16),
+        color: Colors.white,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            BlocBuilder<ProductCubit, ProductState>(
+              builder: (context, state) {
+                final total = context.read<ProductCubit>().total;
+                return Text(
+                  "USD ${total.toStringAsFixed(2)}",
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                );
+              },
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                Stripe.publishableKey = ApiKeys.publishable_key;
+
+                bool result = await PaymentManager.makePayment(context.read<ProductCubit>().total.toInt(), "USD");
+
+                if (!context.mounted) return;
+
+                if (result) {
+                  
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PaymentSuccessPage(),
+                    ),
+                  );
+                } else {
+                   Navigator.push(
+                     context,
+                     MaterialPageRoute(
+                       builder: (context) => const PaymentFailedPage(),
+                     ),
+                   );
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 12,
+                ),
+              ),
+              child: const Text(
+                "Proceed to Payment",
+                style: TextStyle(fontSize: 16, color: Colors.white),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _priceRow(
+    String title,
+    String value, {
+    bool bold = false,
+    bool free = false,
+    bool highlight = false,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              color: highlight ? Colors.grey : Colors.black,
+              fontWeight: bold ? FontWeight.bold : FontWeight.normal,
+            ),
+          ),
+          Text(
+            value,
+            style: TextStyle(
+              color: free
+                  ? Colors.green
+                  : highlight
+                  ? Colors.red
+                  : Colors.black,
+              fontWeight: bold ? FontWeight.bold : FontWeight.normal,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
