@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:p2p_store/core/constants/app_constant.dart';
 import 'package:p2p_store/core/theme/app_theme.dart';
 import 'package:p2p_store/features/products/presentation/manager/theme_cubit.dart';
