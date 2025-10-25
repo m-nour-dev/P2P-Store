@@ -1,13 +1,13 @@
 import 'package:p2p_store/features/products/data/models/product_models.dart';
 
 class ToggleFavoriteCartState {
-  final bool isFavorite;
+  //final bool isFavorite;
   final bool isCartItem;
   final List<Product> favoriteProducts;
   final List<Product> cartProducts;
 
   ToggleFavoriteCartState(
-      {required this.isFavorite,
+      {//required this.isFavorite,
       required this.isCartItem,
       required this.favoriteProducts,
       required this.cartProducts});
@@ -19,7 +19,7 @@ class ToggleFavoriteCartState {
     List<Product>? cartProducts,
   }) {
     return ToggleFavoriteCartState(
-      isFavorite: isFavorite ?? this.isFavorite,
+      //isFavorite: isFavorite ?? this.isFavorite,
       isCartItem: isCartItem ?? this.isCartItem,
       favoriteProducts: favoriteProducts ?? this.favoriteProducts,
       cartProducts: cartProducts ?? this.cartProducts,

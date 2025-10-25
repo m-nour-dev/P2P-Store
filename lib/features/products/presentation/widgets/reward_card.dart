@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:p2p_store/core/theme/app_colors.dart';
+import 'package:p2p_store/features/products/presentation/manager/toggle_favorite_cart_cubit.dart';
+import 'package:p2p_store/features/products/presentation/pages/search_page.dart';
 
 class RewardCard extends StatelessWidget {
   const RewardCard({super.key});
@@ -71,7 +74,18 @@ class RewardCard extends StatelessWidget {
                   ElevatedButton.icon(
                     icon: Icon(Icons.arrow_forward_outlined),
                     label: const Text('Visit Now'),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => BlocProvider.value(
+                              value: context.read<ToggleFavoriteCartCubit>(),
+                              child: SearchPage(
+                                  selectedCategory:
+                                      'womens-shoes')),
+                        ),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(horizontal: 6),
                       backgroundColor: AppColors.primary,

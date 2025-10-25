@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:p2p_store/features/products/presentation/manager/toggle_favorite_cart_cubit.dart';
+import 'package:p2p_store/features/products/presentation/pages/search_page.dart';
 
 class DealOfTheDay extends StatelessWidget {
   const DealOfTheDay({super.key});
@@ -17,7 +20,18 @@ class DealOfTheDay extends StatelessWidget {
           top: 10,
           bottom: 10,
           child: ElevatedButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => BlocProvider.value(
+                      value: context.read<ToggleFavoriteCartCubit>(),
+                      child: SearchPage(
+                          selectedCategory:
+                              'groceries')), 
+                ),
+              );
+            },
             icon: Icon(Icons.arrow_forward_outlined),
             label: const Text('View all'),
             style: ElevatedButton.styleFrom(

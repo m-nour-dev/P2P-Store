@@ -1,4 +1,5 @@
 // 1. Main model to receive the full response
+
 class ProductListModel {
   final List<Product> products;
 
@@ -31,7 +32,7 @@ class Product {
   final String? warrantyInformation;
   final String? shippingInformation;
   final String? availabilityStatus;
-   List<Review>? reviews;
+  List<Review>? reviews;
   final String? returnPolicy;
   final int? minimumOrderQuantity;
   final Meta? meta;

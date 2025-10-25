@@ -3,13 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:p2p_store/features/products/presentation/manager/navigation_cubit.dart';
 import 'package:p2p_store/features/products/presentation/manager/toggle_favorite_cart_cubit.dart';
 import 'package:p2p_store/features/products/presentation/pages/home_page.dart';
-import 'package:p2p_store/features/products/presentation/pages/product_details_page.dart';
 import 'package:p2p_store/features/products/presentation/pages/search_page.dart';
 import 'package:p2p_store/features/products/presentation/pages/test_cart_page.dart';
 import 'package:p2p_store/features/products/presentation/pages/test_profile_page.dart';
 import 'package:p2p_store/features/products/presentation/pages/wishlist_page.dart';
 import 'package:p2p_store/features/products/presentation/widgets/costum_app_bar.dart';
 import 'package:p2p_store/features/products/presentation/widgets/costum_bottom_navigation_bar.dart';
+import 'package:p2p_store/features/products/presentation/widgets/custom_drawer.dart';
 
 class MainLayout extends StatelessWidget {
   const MainLayout({super.key});
@@ -20,9 +20,9 @@ class MainLayout extends StatelessWidget {
       HomePage(),
       WishlistPage(),
       TestCartPage(),
+      //CheckoutPage(),
       SearchPage(selectedCategory: 'all'),
       TestProfilePage(),
-      
     ];
     final pageController = PageController();
 
@@ -33,6 +33,7 @@ class MainLayout extends StatelessWidget {
         child: Builder(
           builder: (context) => Scaffold(
               appBar: CostumAppBar(),
+              drawer: CustomDrawer(),
               body: PageView(
                 controller: pageController,
                 onPageChanged: (index) =>

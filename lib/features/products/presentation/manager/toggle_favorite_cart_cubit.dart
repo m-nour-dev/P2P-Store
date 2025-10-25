@@ -5,19 +5,35 @@ import 'package:p2p_store/features/products/presentation/manager/toggle_favorite
 class ToggleFavoriteCartCubit extends Cubit<ToggleFavoriteCartState> {
   ToggleFavoriteCartCubit()
       : super(ToggleFavoriteCartState(
-            isFavorite: false,
+            //isFavorite: false,
             isCartItem: false,
             favoriteProducts: [],
             cartProducts: []));
 
-  void toggleFavorite() {
-    emit(state.copyWith(isFavorite: !state.isFavorite));
+ void toggleFavorite(Product product) {
+    final favorites = List<Product>.from(state.favoriteProducts);
+
+    // 🔍 تحقق إذا كان هناك منتج بنفس الـ id
+    final existingIndex = favorites.indexWhere((p) => p.id == product.id);
+
+    if (existingIndex != -1) {
+      // ✅ إذا وُجد — نحذفه (أي إلغاء الإضافة للمفضلة)
+      favorites.removeAt(existingIndex);
+    } else {
+      // ✅ إذا لم يوجد — نضيفه إلى المفضلة
+      favorites.add(product);
+    }
+
+    emit(state.copyWith(favoriteProducts: favorites));
   }
+
 
   void toggleCartItem() {
-    emit(state.copyWith(isCartItem: !state.isFavorite));
+    emit(state.copyWith(isCartItem: !state.isCartItem));
   }
-
+    bool isFavorite(Product product) {
+    return state.favoriteProducts.any((p) => p.id == product.id);
+  }
   void addToFavorite(Product product) {
     List<Product> favoriteList = state.favoriteProducts;
     favoriteList.add(product);

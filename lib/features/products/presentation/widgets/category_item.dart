@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:p2p_store/features/products/presentation/manager/toggle_favorite_cart_cubit.dart';
 import 'package:p2p_store/features/products/presentation/pages/search_page.dart';
 
 class CategoryItem extends StatelessWidget {
@@ -17,8 +19,9 @@ class CategoryItem extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) => SearchPage(
-                selectedCategory: categoryLabel), // ✅ تمرير اسم الكاتيجوري
+            builder: (_) => BlocProvider.value(
+                value: context.read<ToggleFavoriteCartCubit>(),
+                child: SearchPage(selectedCategory: categoryLabel)),
           ),
         );
       },

@@ -52,10 +52,10 @@ class HomePage extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Spacer(),
-                      FilterSortBottuns(
+                      FilterSortButtons(
                           myLabel: 'Sort', myIcon: Icon(Icons.sort, size: 14)),
                       SizedBox(width: 5),
-                      FilterSortBottuns(
+                      FilterSortButtons(
                           myLabel: 'filter',
                           myIcon: Icon(Icons.filter_alt, size: 14)),
                     ],
@@ -66,13 +66,21 @@ class HomePage extends StatelessWidget {
                   DealCard(),
                   SizedBox(height: 5),
                   DealOfTheDay(),
-                  SizedBox(height: 290, child: ProductListHorizontal()),
+                  SizedBox(
+                      height: 290,
+                      child: ProductListHorizontal(
+                        catLabel: 'mobile-accessories',
+                      )),
                   SizedBox(height: 10),
                   OffersBar(),
                   RewardCard(),
                   SizedBox(height: 10),
                   TrendingProductsBar(),
-                  SizedBox(height: 290, child: ProductListHorizontal()),
+                  SizedBox(
+                      height: 290,
+                      child: ProductListHorizontal(
+                        catLabel: 'beauty',
+                      )),
                   SizedBox(height: 10),
                   SummerOffersCard(),
                   SponsoredAdd(),

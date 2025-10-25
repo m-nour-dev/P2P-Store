@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:p2p_store/features/products/presentation/manager/toggle_favorite_cart_cubit.dart';
+import 'package:p2p_store/features/products/presentation/pages/search_page.dart';
 
 class DealCard extends StatelessWidget {
   const DealCard({super.key});
@@ -62,7 +65,17 @@ class DealCard extends StatelessWidget {
                   ElevatedButton.icon(
                     icon: Icon(Icons.arrow_forward_outlined),
                     label: const Text('Shop Now'),
-                    onPressed: () {},
+                    onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => BlocProvider.value(
+                value: context.read<ToggleFavoriteCartCubit>(),
+                child: SearchPage(
+                    selectedCategory:
+                        'mens-shirts')), 
+          ),
+        );},
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(
                         horizontal: 6
