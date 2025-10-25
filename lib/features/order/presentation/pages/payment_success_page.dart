@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:p2p_store/features/order/presentation/manager/product_cubit.dart';
 import 'package:p2p_store/features/order/presentation/pages/my_old_requests.dart';
+import 'package:p2p_store/features/products/presentation/manager/toggle_favorite_cart_cubit.dart';
 
 class PaymentSuccessPage extends StatefulWidget {
   const PaymentSuccessPage({super.key});
@@ -13,25 +13,35 @@ class PaymentSuccessPage extends StatefulWidget {
 
 class _PaymentSuccessPageState extends State<PaymentSuccessPage> {
   double _opacity = 0.0;
+  Timer? _navigationTimer;
 
   @override
   void initState() {
     super.initState();
 
     Future.delayed(const Duration(milliseconds: 300), () {
-      setState(() => _opacity = 1.0);
-    });
-
-    Timer(const Duration(seconds: 5), () {
-      context.read<ProductCubit>().addProductToMyOldRequests();
-
       if (mounted) {
-        Navigator.push(
+        setState(() => _opacity = 1.0);
+      }
+    });
+    _navigationTimer = Timer(const Duration(seconds: 3), () {
+      context.read<ToggleFavoriteCartCubit>().addmyOldMypreviousRequestsrequest();
+      if (mounted) {
+        Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => MyOldRequests()),
+          MaterialPageRoute(
+              builder: (_) => BlocProvider.value(
+                  value: context.read<ToggleFavoriteCartCubit>(),
+                  child: MyOldRequests())),
         );
       }
     });
+  }
+
+  @override
+  void dispose() {
+    _navigationTimer?.cancel();
+    super.dispose();
   }
 
   @override

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:p2p_store/core/constants/strip_keys.dart';
 
@@ -13,6 +14,7 @@ abstract class PaymentManager {
       await _initializePaymentSheet(clientSecret);
       await Stripe.instance.presentPaymentSheet();
       return true;
+      
       // odeme sayfasin yonlendimek icin burya kullana bilirsin
     } catch (error) {
       throw Exception(error.toString());
@@ -34,7 +36,7 @@ abstract class PaymentManager {
       'https://api.stripe.com/v1/payment_intents',
       options: Options(
         headers: {
-          'Authorization': 'Bearer ${ApiKeys.secret_key}',
+          'Authorization': 'Bearer ${ApiKeys.secretKey}',
           'Content-Type': 'application/x-www-form-urlencoded',
         },
       ),

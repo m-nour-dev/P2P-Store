@@ -8,6 +8,7 @@ class ToggleFavoriteCartCubit extends Cubit<ToggleFavoriteCartState> {
             //isFavorite: false,
             isCartItem: false,
             favoriteProducts: [],
+            myOldMypreviousrequestsrequest: [],
             cartProducts: []));
 
  void toggleFavorite(Product product) {
@@ -57,4 +58,16 @@ class ToggleFavoriteCartCubit extends Cubit<ToggleFavoriteCartState> {
     cartList.remove(product);
     emit(state.copyWith(cartProducts: cartList));
   }
+
+  void addmyOldMypreviousRequestsrequest() {
+    List<Product> cartList = state.cartProducts;
+    
+    emit(state.copyWith(myOldMypreviousrequestsrequest: cartList));
+  }
+
+  void removeAllshopingBag() {
+    emit(state.copyWith(cartProducts: []));
+  }
+
+  double get total => state.cartProducts.fold(0, (sum, p) => sum + (p.price));
 }

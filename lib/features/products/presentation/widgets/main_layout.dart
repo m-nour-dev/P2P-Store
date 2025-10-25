@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:p2p_store/features/order/presentation/pages/checkout_page.dart';
 import 'package:p2p_store/features/products/presentation/manager/navigation_cubit.dart';
 import 'package:p2p_store/features/products/presentation/manager/toggle_favorite_cart_cubit.dart';
 import 'package:p2p_store/features/products/presentation/pages/home_page.dart';
 import 'package:p2p_store/features/products/presentation/pages/search_page.dart';
-import 'package:p2p_store/features/products/presentation/pages/test_cart_page.dart';
 import 'package:p2p_store/features/products/presentation/pages/test_profile_page.dart';
 import 'package:p2p_store/features/products/presentation/pages/wishlist_page.dart';
 import 'package:p2p_store/features/products/presentation/widgets/costum_app_bar.dart';
@@ -19,8 +19,7 @@ class MainLayout extends StatelessWidget {
     final pages = const [
       HomePage(),
       WishlistPage(),
-      TestCartPage(),
-      //CheckoutPage(),
+      CheckoutPage(),
       SearchPage(selectedCategory: 'all'),
       TestProfilePage(),
     ];

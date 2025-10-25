@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:flutter_stripe/flutter_stripe.dart' hide Card;
 import 'package:p2p_store/core/constants/app_constant.dart';
 import 'package:p2p_store/core/constants/strip_keys.dart';
 import 'package:p2p_store/features/order/presentation/manager/payment_manager.dart';
 import 'package:p2p_store/features/order/presentation/pages/payment_failed_page.dart';
 import 'package:p2p_store/features/order/presentation/pages/payment_success_page.dart';
-import '../manager/product_cubit.dart';
-import '../manager/product_state.dart';
+import 'package:p2p_store/features/products/presentation/manager/toggle_favorite_cart_cubit.dart';
+import 'package:p2p_store/features/products/presentation/manager/toggle_favorite_cart_state.dart';
+import 'package:p2p_store/features/products/presentation/pages/wishlist_page.dart';
 
 class ShopingBag extends StatelessWidget {
   const ShopingBag({super.key});
@@ -21,97 +22,149 @@ class ShopingBag extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-
-              // m.nur yaptigi favorite page gidecek
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const FavoritePage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const WishlistPage()),
+              );
             },
             icon: Icon(Icons.favorite_border),
           ),
         ],
       ),
-      body: BlocBuilder<ProductCubit, ProductState>(
+
+      body: BlocBuilder<ToggleFavoriteCartCubit, ToggleFavoriteCartState>(
         builder: (context, state) {
-          if (state.shopProducts.isEmpty) {
+          if (state.cartProducts.isEmpty) {
             return const Center(child: Text("No items in cart"));
           }
-          final product = state.shopProducts.first;
-          final total = context.read<ProductCubit>().total;
+
+          final productList = state.cartProducts;
+          
+          final total = context.read<ToggleFavoriteCartCubit>().total;
 
           return Padding(
             padding: const EdgeInsets.all(AppConstants.defaultPadding),
             child: Column(
               children: [
-                // 🛍️ Product card
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Image.network(
-                      product.imageUrl,
-                      height: 100,
-                      width: 100,
-                      fit: BoxFit.cover,
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            product.name,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: productList.length,
+                    itemBuilder: (context, index) {
+                      final product = productList[index];
+
+                      return Card(
+                        margin: const EdgeInsets.symmetric(vertical: 8),
+                        elevation: 3,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Image.network(
+                                  product.thumbnail!,
+                                  height: 100,
+                                  width: 100,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+
+                              // 🧾 Ürün Detayları
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      product.brand.toString(),
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+
+                                    const SizedBox(height: 4),
+
+                                    Text(
+                                      product.title,
+                                      style: const TextStyle(
+                                          fontSize: 14, color: Colors.black87),
+                                    ),
+
+                                    const SizedBox(height: 6),
+
+                                    Row(
+                                      children: [
+                                        const Icon(Icons.star,
+                                            color: Colors.amber, size: 18),
+                                        Text(
+                                          " ${product.rating}",
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
+
+                                    const SizedBox(height: 6),
+
+                                    Text(
+                                      "\$${product.price.toStringAsFixed(2)}",
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                        color: Colors.green,
+                                      ),
+                                    ),
+
+                                    const SizedBox(height: 6),
+
+                                    // 🔹 Ek detaylar
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        if (product.category != null)
+                                          Text(
+                                            "Category: ${product.category}",
+                                            style: const TextStyle(
+                                                color: Colors.black54),
+                                          ),
+                                        if (product.stock != null)
+                                          Text(
+                                            "Stock: ${product.stock} available",
+                                            style: const TextStyle(
+                                                color: Colors.black54),
+                                          ),
+                                        if (product.description != null)
+                                          Text(
+                                            product.description!,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                              color: Colors.grey,
+                                              fontSize: 13,
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
-                          Text("Qty: ${product.quantity}"),
-                          Text(
-                            " ${product.price.toStringAsFixed(2)}",
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black87,
-                            ),
-                          ),
-                          const SizedBox(height: 5),
-                          const Text(
-                            "Delivery by 10 May 20XX",
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                        ),
+                      );
+                    },
+                  ),
                 ),
 
                 const SizedBox(height: 10),
 
-                // 💸 Coupon section
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey.shade300),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text("Apply Coupons"),
-                      Text(
-                        "Select",
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 20),
-
-                // 🧾 Order details
+                // 🧾 Ödeme Detayları
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
@@ -119,25 +172,23 @@ class ShopingBag extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Column(
+                    
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      
                       const Text(
                         "Order Payment Details",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 10),
                       _priceRow(
-                        "Order Amounts",
-                        "USD ${total.toStringAsFixed(2)}",
-                      ),
-                      _priceRow("Convenience", "Apply Coupon", highlight: true),
+                          "Order Amount", "USD ${total.toStringAsFixed(2)}"),
                       _priceRow("Delivery Fee", "Free", free: true),
                       const Divider(),
                       _priceRow(
-                        "Order Total",
-                        "USD ${total.toStringAsFixed(2)}",
-                        bold: true,
-                      ),
+                          "Order Total", "USD ${total.toStringAsFixed(2)}",
+                          bold: true),
+                          
                     ],
                   ),
                 ),
@@ -145,18 +196,19 @@ class ShopingBag extends StatelessWidget {
             ),
           );
         },
+        
       ),
 
-      // 🛒 Bottom bar
+      // 💳 Alt Kısım — Ödeme Butonu
       bottomNavigationBar: Container(
         padding: const EdgeInsets.all(16),
         color: Colors.white,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            BlocBuilder<ProductCubit, ProductState>(
+            BlocBuilder<ToggleFavoriteCartCubit, ToggleFavoriteCartState>(
               builder: (context, state) {
-                final total = context.read<ProductCubit>().total;
+                final total = context.read<ToggleFavoriteCartCubit>().total;
                 return Text(
                   "USD ${total.toStringAsFixed(2)}",
                   style: const TextStyle(
@@ -168,35 +220,36 @@ class ShopingBag extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () async {
-                Stripe.publishableKey = ApiKeys.publishable_key;
-
-                bool result = await PaymentManager.makePayment(context.read<ProductCubit>().total.toInt(), "USD");
+                Stripe.publishableKey = ApiKeys.publishableKey;
+                bool result = await PaymentManager.makePayment(
+                  context.read<ToggleFavoriteCartCubit>().total.toInt(),
+                  "USD",
+                );
 
                 if (!context.mounted) return;
 
                 if (result) {
-                  
-                  Navigator.push(
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const PaymentSuccessPage(),
+                      builder: (_) => BlocProvider.value(
+                          value: context.read<ToggleFavoriteCartCubit>(),
+                          child: PaymentSuccessPage()),
                     ),
                   );
                 } else {
-                   Navigator.push(
-                     context,
-                     MaterialPageRoute(
-                       builder: (context) => const PaymentFailedPage(),
-                     ),
-                   );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PaymentFailedPage(),
+                    ),
+                  );
                 }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.red,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 12,
-                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               ),
               child: const Text(
                 "Proceed to Payment",
@@ -214,7 +267,6 @@ class ShopingBag extends StatelessWidget {
     String value, {
     bool bold = false,
     bool free = false,
-    bool highlight = false,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
@@ -224,18 +276,14 @@ class ShopingBag extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-              color: highlight ? Colors.grey : Colors.black,
+              color: Colors.black,
               fontWeight: bold ? FontWeight.bold : FontWeight.normal,
             ),
           ),
           Text(
             value,
             style: TextStyle(
-              color: free
-                  ? Colors.green
-                  : highlight
-                  ? Colors.red
-                  : Colors.black,
+              color: free ? Colors.green : Colors.black,
               fontWeight: bold ? FontWeight.bold : FontWeight.normal,
             ),
           ),

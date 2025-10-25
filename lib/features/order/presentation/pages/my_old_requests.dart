@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:p2p_store/features/order/data/models/product_model.dart';
-import 'package:p2p_store/features/order/presentation/manager/product_cubit.dart';
-import 'package:p2p_store/features/order/presentation/manager/product_state.dart';
-import 'package:p2p_store/features/order/presentation/pages/checkout_page.dart';
+import 'package:p2p_store/features/products/presentation/manager/toggle_favorite_cart_cubit.dart';
+import 'package:p2p_store/features/products/presentation/manager/toggle_favorite_cart_state.dart';
+import 'package:p2p_store/features/products/presentation/widgets/main_layout.dart';
 
 class MyOldRequests extends StatelessWidget {
   const MyOldRequests({super.key});
@@ -17,35 +16,31 @@ class MyOldRequests extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            // Navigator.pop(context); yerine özel bir yönlendirme kullanın.
-
-            // 1. İstenen Sayfaya Gitme ve Önceki Rotaları Temizleme
-            // Bu yöntem, kullanıcıyı direkt olarak belirttiğiniz sayfaya (HomePage) götürür
-            // ve geri kalan tüm sayfaları bellekten siler.
+            context.read<ToggleFavoriteCartCubit>().removeAllshopingBag();
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
-                builder: (context) => const CheckoutPage(),
-              ), // DÖNÜLMEK İSTENEN SAYFA
-              (Route<dynamic> route) => false, // Tüm rotaları kaldır.
+                builder: (context) => const MainLayout(),
+              ),
+              (Route<dynamic> route) => false,
             );
           },
         ),
       ),
-
-      body: BlocBuilder<ProductCubit, ProductState>(
+      body: BlocBuilder<ToggleFavoriteCartCubit, ToggleFavoriteCartState>(
         buildWhen: (previous, current) =>
-            previous.myOldRequests != current.myOldRequests,
-        builder: (BuildContext context, ProductState state) {
-          if (state.myOldRequests.isEmpty) {
+            previous.myOldMypreviousrequestsrequest !=
+            current.myOldMypreviousrequestsrequest,
+        builder: (BuildContext context, state) {
+          if (state.myOldMypreviousrequestsrequest.isEmpty) {
             return const Center(child: Text(" Old Requests Not Fonud"));
           }
 
           return ListView.builder(
             padding: const EdgeInsets.all(8.0),
-            itemCount: state.myOldRequests.length,
+            itemCount: state.myOldMypreviousrequestsrequest.length,
             itemBuilder: (context, index) {
-              final ProductModel product = state.myOldRequests[index];
+              final product = state.myOldMypreviousrequestsrequest[index];
               return Card(
                 margin: const EdgeInsets.symmetric(vertical: 8),
                 elevation: 3,
@@ -59,38 +54,31 @@ class MyOldRequests extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(12),
                         child: Image.network(
-                          product.imageUrl,
+                          product.thumbnail!,
                           height: 90,
                           width: 90,
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) =>
                               const SizedBox(
-                                height: 90,
-                                width: 90,
-                                child: Icon(Icons.broken_image),
-                              ),
+                            height: 90,
+                            width: 90,
+                            child: Icon(Icons.broken_image),
+                          ),
                         ),
                       ),
                       const SizedBox(width: 12),
-
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              product.name,
+                              product.brand!,
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            const SizedBox(height: 4),
-                            Text(
-                              "Variations: ${product.variations.join(', ')}",
-                            ),
-
                             const SizedBox(height: 10),
-
                             Row(
                               children: [
                                 Text(
@@ -102,7 +90,7 @@ class MyOldRequests extends StatelessWidget {
                                 ),
                                 const SizedBox(width: 6),
                                 Text(
-                                  "\$${product.oldPrice}",
+                                  "\$${product.price}",
                                   style: const TextStyle(
                                     decoration: TextDecoration.lineThrough,
                                     color: Colors.grey,
