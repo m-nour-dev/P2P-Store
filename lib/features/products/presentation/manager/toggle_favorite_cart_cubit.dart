@@ -14,14 +14,11 @@ class ToggleFavoriteCartCubit extends Cubit<ToggleFavoriteCartState> {
  void toggleFavorite(Product product) {
     final favorites = List<Product>.from(state.favoriteProducts);
 
-    // 🔍 تحقق إذا كان هناك منتج بنفس الـ id
     final existingIndex = favorites.indexWhere((p) => p.id == product.id);
 
     if (existingIndex != -1) {
-      // ✅ إذا وُجد — نحذفه (أي إلغاء الإضافة للمفضلة)
       favorites.removeAt(existingIndex);
     } else {
-      // ✅ إذا لم يوجد — نضيفه إلى المفضلة
       favorites.add(product);
     }
 

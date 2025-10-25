@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:p2p_store/features/order/presentation/pages/shoping_bag.dart';
 import 'package:p2p_store/features/products/presentation/manager/toggle_favorite_cart_cubit.dart';
 import 'package:p2p_store/features/products/presentation/manager/toggle_favorite_cart_state.dart';
 
