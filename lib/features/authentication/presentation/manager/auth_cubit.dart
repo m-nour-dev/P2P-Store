@@ -45,6 +45,9 @@ class AuthCubit extends Cubit<AuthState> {
       emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
     }
   }
+   void logout() {
+    emit(const AuthState(user: null, isLoading: false, errorMessage: null));
+  }
 
  
 }

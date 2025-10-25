@@ -1,38 +1,75 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:p2p_store/features/authentication/data/models/address_model.dart';
 import 'package:p2p_store/features/authentication/presentation/manager/address_cubit.dart';
-import 'package:p2p_store/features/authentication/presentation/manager/address_state.dart';
+import 'package:p2p_store/features/authentication/presentation/manager/auth_cubit.dart';
+import 'package:p2p_store/features/authentication/presentation/manager/auth_state.dart';
 
-class SaveAddressButton extends StatelessWidget {
-  final VoidCallback onPressed;
-  const SaveAddressButton({super.key, required this.onPressed});
+class SaveButton extends StatelessWidget {
+  final TextEditingController addressController;
+  final TextEditingController countryController;
+  final TextEditingController stateController;
+  final TextEditingController phoneController;
+  final userId;
+
+  const SaveButton({
+    super.key,
+    required this.addressController,
+    required this.countryController,
+    required this.stateController,
+    required this.phoneController, 
+    required this.userId,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AddressCubit, AddressState>(
-      builder: (context, state) {
-        return SizedBox(
-          width: double.infinity,
-          height: 52,
+    return BlocBuilder<AuthCubit, AuthState>(
+      builder: (context, authState) {
+        final user = authState.user;
+
+        return Padding(
+          padding: const EdgeInsets.only(top: 20.0),
           child: ElevatedButton(
-            onPressed: state.isLoading ? null : onPressed,
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFFF3B5F),
+              backgroundColor: Colors.black,
+              minimumSize: const Size(double.infinity, 50),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(10),
               ),
             ),
-            child: state.isLoading
-                ? const CircularProgressIndicator(color: Colors.white)
-                : Text(
-                    "Save",
-                    style: GoogleFonts.montserrat(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
+            onPressed: () {
+              if (user == null) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("User not found! Please login again."),
                   ),
+                );
+                return;
+              }
+
+              final newAddress = AddressModel(
+                address: addressController.text,
+                country: countryController.text,
+                state: stateController.text,
+                phoneNumber: phoneController.text,
+              );
+
+              context.read<AddressCubit>().addAddress(user.id, newAddress);
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("Address saved successfully ✅"),
+                ),
+              );
+            },
+            child: const Text(
+              "Save",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+              ),
+            ),
           ),
         );
       },

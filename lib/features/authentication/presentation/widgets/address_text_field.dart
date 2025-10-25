@@ -2,20 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AddressTextField extends StatelessWidget {
-  final String text;
+  final TextEditingController? controller;
+  final String? hintText;
   final bool readOnly;
+
   const AddressTextField({
     super.key,
-    required this.text,
+    this.controller,
+    this.hintText,
     required this.readOnly,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       readOnly: readOnly,
-      controller: TextEditingController(text: text),
       decoration: InputDecoration(
+        hintText: hintText,
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 12,
           vertical: 14,
