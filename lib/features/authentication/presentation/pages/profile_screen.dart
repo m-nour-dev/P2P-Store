@@ -32,10 +32,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return BlocProvider(
       create: (context) => AddressCubit(),
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.onTertiary,
         appBar: AppBar(
           backgroundColor: Colors.white,
           centerTitle: true,
+          automaticallyImplyLeading: false,
           title: Text(
             "Profile",
             style: GoogleFonts.montserrat(
@@ -83,7 +84,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const SizedBox(height: 25),
                   SectionTitle(sectionTitleText: "Business Address Details"),
                   SizedBox(height: 22),
-
                   TextFieldTitle(textFieldTitileText: "Address"),
                   SizedBox(height: 8),
                   AddressTextField(
@@ -122,7 +122,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     phoneController: phoneController,
                     userId: userId,
                   ),
-                  
                 ],
               ),
             );

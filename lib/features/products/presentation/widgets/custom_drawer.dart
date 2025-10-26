@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:p2p_store/core/theme/app_colors.dart';
+import 'package:p2p_store/features/authentication/presentation/pages/sign_in_screen.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -66,7 +67,13 @@ class CustomDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.logout, color: AppColors.primary),
             title: const Text('Log Out'),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SignInScreen(),
+                  ));
+            },
           ),
         ],
       ),

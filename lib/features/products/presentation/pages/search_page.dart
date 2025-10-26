@@ -99,6 +99,7 @@ class _SearchPageState extends State<SearchPage> {
 
           return Scaffold(
             appBar: AppBar(
+              automaticallyImplyLeading: false,
               toolbarHeight: 90,
               title: Column(
                 children: [

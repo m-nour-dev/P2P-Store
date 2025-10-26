@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:p2p_store/features/authentication/presentation/pages/profile_screen.dart';
 import 'package:p2p_store/features/order/presentation/pages/checkout_page.dart';
 import 'package:p2p_store/features/products/presentation/manager/navigation_cubit.dart';
 import 'package:p2p_store/features/products/presentation/manager/toggle_favorite_cart_cubit.dart';
@@ -21,7 +22,7 @@ class MainLayout extends StatelessWidget {
       WishlistPage(),
       CheckoutPage(),
       SearchPage(selectedCategory: 'all'),
-      TestProfilePage(),
+      ProfileScreen(),
     ];
     final pageController = PageController();
 

@@ -13,7 +13,11 @@ class CheckoutPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => AddressEditCubit(),
       child: Scaffold(
-        appBar: AppBar(title: Text('Checkout'), centerTitle: true),
+        appBar: AppBar(
+          title: Text('Checkout'),
+          centerTitle: true,
+          automaticallyImplyLeading: false,
+        ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -29,14 +33,12 @@ class CheckoutPage extends StatelessWidget {
                   ),
                 ],
               ),
-      
               const SizedBox(height: 12),
               Row(
                 children: [
                   Expanded(child: Row(children: [AddressCardWidget()])),
                 ],
               ),
-      
               SizedBox(height: 15),
               Stack(
                 children: [

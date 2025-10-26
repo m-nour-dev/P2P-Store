@@ -8,8 +8,6 @@ class AuthCubit extends Cubit<AuthState> {
 
   AuthCubit(this.authRemoteDataSource) : super(const AuthState());
 
-  
-
   void onPasswordChanged(String value) {
     emit(state.copyWith(password: value));
   }
@@ -45,9 +43,4 @@ class AuthCubit extends Cubit<AuthState> {
       emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
     }
   }
-   void logout() {
-    emit(const AuthState(user: null, isLoading: false, errorMessage: null));
-  }
-
- 
 }
