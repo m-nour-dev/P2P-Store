@@ -10,6 +10,7 @@ import 'package:p2p_store/features/authentication/presentation/pages/get_started
 import 'package:p2p_store/features/authentication/presentation/pages/profile_screen.dart';
 import 'package:p2p_store/features/authentication/presentation/pages/sign_up_screen.dart';
 import 'package:p2p_store/features/authentication/presentation/widgets/text_field_item.dart';
+import 'package:p2p_store/features/products/presentation/widgets/main_layout.dart';
 
 class SignInScreen extends StatelessWidget {
   final emailController = TextEditingController();
@@ -41,7 +42,7 @@ class SignInScreen extends StatelessWidget {
               MaterialPageRoute(
                 builder: (_) => BlocProvider.value(
                   value: context.read<AuthCubit>(),
-                  child: GetStarted(),
+                  child: MainLayout(),
                 ),
               ),
             );
