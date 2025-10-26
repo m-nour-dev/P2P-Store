@@ -32,15 +32,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return BlocProvider(
       create: (context) => AddressCubit(),
       child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.onTertiary,
         appBar: AppBar(
-          backgroundColor: Colors.white,
           centerTitle: true,
           automaticallyImplyLeading: false,
           title: Text(
             "Profile",
             style: GoogleFonts.montserrat(
-              color: Colors.black,
               fontSize: 18,
               fontWeight: FontWeight.w600,
               height: 22 / 18,
@@ -58,7 +55,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const SizedBox(height: 30),
                   SectionTitle(sectionTitleText: "Personal Details"),
                   const SizedBox(height: 20),
-                  TextFieldTitle(textFieldTitileText: "Email Address"),
+                  TextFieldTitle(textFieldTitileText: "Name"),
+                  const SizedBox(height: 8),
+                  BlocBuilder<AuthCubit, AuthState>(
+                    builder: (context, state) {
+                      return PersonalDetailsTextField(
+                        text: state.user!.username,
+                        readOnly: true,
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  TextFieldTitle(
+                    textFieldTitileText: "Email Address",
+                  ),
                   const SizedBox(height: 8),
                   BlocBuilder<AuthCubit, AuthState>(
                     builder: (context, state) {

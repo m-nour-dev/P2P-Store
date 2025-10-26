@@ -10,7 +10,6 @@ class SectionTitle extends StatelessWidget {
     return Text(
       sectionTitleText,
       style: GoogleFonts.montserrat(
-        color: Colors.black,
         fontSize: 18,
         fontWeight: FontWeight.w600,
         height: 20 / 16,

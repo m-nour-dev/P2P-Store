@@ -10,7 +10,8 @@ class ProfileAvatarSection extends StatelessWidget {
         children: [
           const CircleAvatar(
             radius: 60,
-            backgroundImage: AssetImage('images/profile_avatar.png'),
+            backgroundImage:
+                NetworkImage('https://www.w3schools.com/howto/img_avatar.png'),
           ),
           Positioned(
             bottom: 0,

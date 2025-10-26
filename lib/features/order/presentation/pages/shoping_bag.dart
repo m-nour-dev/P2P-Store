@@ -19,19 +19,7 @@ class ShopingBag extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Shopping Bag"),
         centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const WishlistPage()),
-              );
-            },
-            icon: Icon(Icons.favorite_border),
-          ),
-        ],
       ),
-
       body: BlocBuilder<ToggleFavoriteCartCubit, ToggleFavoriteCartState>(
         builder: (context, state) {
           if (state.cartProducts.isEmpty) {
@@ -39,7 +27,7 @@ class ShopingBag extends StatelessWidget {
           }
 
           final productList = state.cartProducts;
-          
+
           final total = context.read<ToggleFavoriteCartCubit>().total;
 
           return Padding(
@@ -53,6 +41,7 @@ class ShopingBag extends StatelessWidget {
                       final product = productList[index];
 
                       return Card(
+                        color: Theme.of(context).colorScheme.onTertiary,
                         margin: const EdgeInsets.symmetric(vertical: 8),
                         elevation: 3,
                         shape: RoundedRectangleBorder(
@@ -73,8 +62,6 @@ class ShopingBag extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(width: 12),
-
-                              // 🧾 Ürün Detayları
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,17 +73,12 @@ class ShopingBag extends StatelessWidget {
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-
                                     const SizedBox(height: 4),
-
                                     Text(
                                       product.title,
-                                      style: const TextStyle(
-                                          fontSize: 14, color: Colors.black87),
+                                      style: const TextStyle(fontSize: 14),
                                     ),
-
                                     const SizedBox(height: 6),
-
                                     Row(
                                       children: [
                                         const Icon(Icons.star,
@@ -108,9 +90,7 @@ class ShopingBag extends StatelessWidget {
                                         ),
                                       ],
                                     ),
-
                                     const SizedBox(height: 6),
-
                                     Text(
                                       "\$${product.price.toStringAsFixed(2)}",
                                       style: const TextStyle(
@@ -119,10 +99,7 @@ class ShopingBag extends StatelessWidget {
                                         color: Colors.green,
                                       ),
                                     ),
-
                                     const SizedBox(height: 6),
-
-                                    // 🔹 Ek detaylar
                                     Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -130,14 +107,10 @@ class ShopingBag extends StatelessWidget {
                                         if (product.category != null)
                                           Text(
                                             "Category: ${product.category}",
-                                            style: const TextStyle(
-                                                color: Colors.black54),
                                           ),
                                         if (product.stock != null)
                                           Text(
                                             "Stock: ${product.stock} available",
-                                            style: const TextStyle(
-                                                color: Colors.black54),
                                           ),
                                         if (product.description != null)
                                           Text(
@@ -161,10 +134,7 @@ class ShopingBag extends StatelessWidget {
                     },
                   ),
                 ),
-
                 const SizedBox(height: 10),
-
-                // 🧾 Ödeme Detayları
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
@@ -172,10 +142,8 @@ class ShopingBag extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Column(
-                    
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      
                       const Text(
                         "Order Payment Details",
                         style: TextStyle(fontWeight: FontWeight.bold),
@@ -188,7 +156,6 @@ class ShopingBag extends StatelessWidget {
                       _priceRow(
                           "Order Total", "USD ${total.toStringAsFixed(2)}",
                           bold: true),
-                          
                     ],
                   ),
                 ),
@@ -196,13 +163,9 @@ class ShopingBag extends StatelessWidget {
             ),
           );
         },
-        
       ),
-
-      // 💳 Alt Kısım — Ödeme Butonu
       bottomNavigationBar: Container(
         padding: const EdgeInsets.all(16),
-        color: Colors.white,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -276,14 +239,13 @@ class ShopingBag extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-              color: Colors.black,
               fontWeight: bold ? FontWeight.bold : FontWeight.normal,
             ),
           ),
           Text(
             value,
             style: TextStyle(
-              color: free ? Colors.green : Colors.black,
+              color: Colors.green,
               fontWeight: bold ? FontWeight.bold : FontWeight.normal,
             ),
           ),

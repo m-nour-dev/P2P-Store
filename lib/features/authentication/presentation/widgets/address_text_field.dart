@@ -27,7 +27,6 @@ class AddressTextField extends StatelessWidget {
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
       ),
       style: GoogleFonts.montserrat(
-        color: Colors.black87,
         fontSize: 14,
         fontWeight: FontWeight.w400,
       ),

@@ -13,6 +13,7 @@ class AddressCardWidget extends StatelessWidget {
       builder: (context, state) {
         return Expanded(
           child: Card(
+            color: Theme.of(context).colorScheme.onTertiary,
             elevation: 3,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
@@ -22,7 +23,6 @@ class AddressCardWidget extends StatelessWidget {
               child: Stack(
                 children: [
                   Positioned(right: 0, top: 0, child: EditAddressWidget()),
-          
                   BlocBuilder<AddressEditCubit, AddressEditState>(
                     buildWhen: (previous, current) =>
                         previous.address != current.address ||

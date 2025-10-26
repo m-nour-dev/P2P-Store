@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:p2p_store/core/theme/app_colors.dart';
+import 'package:p2p_store/features/authentication/presentation/manager/auth_cubit.dart';
+import 'package:p2p_store/features/authentication/presentation/manager/auth_state.dart';
 import 'package:p2p_store/features/authentication/presentation/pages/sign_in_screen.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -29,12 +32,25 @@ class CustomDrawer extends StatelessWidget {
                       'https://www.w3schools.com/howto/img_avatar.png'),
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  'Hello Mohamed Nour',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                /*const SizedBox(height: 20),
+                  TextFieldTitle(textFieldTitileText: "Name"),
+                  const SizedBox(height: 8),
+                  BlocBuilder<AuthCubit, AuthState>(
+                    builder: (context, state) {
+                      return PersonalDetailsTextField(
+                        text: state.user!.username,
+                        readOnly: true,
+                      );
+                    },
+                  ),*/
+                BlocBuilder<AuthCubit, AuthState>(
+                  builder: (context, state) => Text(
+                    state.user!.username,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],

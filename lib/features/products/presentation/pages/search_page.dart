@@ -10,8 +10,8 @@ import 'package:p2p_store/features/products/presentation/widgets/product_card.da
 
 class SearchPage extends StatefulWidget {
   final String? selectedCategory;
-
-  const SearchPage({super.key, this.selectedCategory});
+  final bool? isInCategoryItem;
+  const SearchPage({super.key, this.selectedCategory, this.isInCategoryItem});
 
   @override
   State<SearchPage> createState() => _SearchPageState();
@@ -99,7 +99,8 @@ class _SearchPageState extends State<SearchPage> {
 
           return Scaffold(
             appBar: AppBar(
-              automaticallyImplyLeading: false,
+              automaticallyImplyLeading:
+                  widget.isInCategoryItem == true ? true : false,
               toolbarHeight: 90,
               title: Column(
                 children: [

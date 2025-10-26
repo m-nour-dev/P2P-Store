@@ -10,7 +10,6 @@ class TextFieldTitle extends StatelessWidget {
     return Text(
       textFieldTitileText,
       style: GoogleFonts.montserrat(
-        color: const Color.fromARGB(255, 0, 0, 0),
         fontSize: 16,
         fontWeight: FontWeight.w400,
         height: 20 / 16,

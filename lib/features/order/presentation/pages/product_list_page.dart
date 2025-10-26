@@ -43,14 +43,13 @@ class ProductListPage extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  backgroundColor: Colors.black,
+                  backgroundColor: Theme.of(context).colorScheme.onTertiary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
                 child: const Text(
                   "Go To Shoping Bag",
-                  style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
             ),

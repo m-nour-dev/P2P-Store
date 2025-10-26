@@ -23,7 +23,7 @@ class _PaymentFailedPageState extends State<PaymentFailedPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.onTertiary,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -10,6 +10,7 @@ class ProductCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Theme.of(context).colorScheme.onTertiary,
       margin: const EdgeInsets.symmetric(vertical: 8),
       elevation: 3,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -22,15 +23,15 @@ class ProductCardWidget extends StatelessWidget {
             final product = state.cartProducts;
             return Row(
               children: [
-                 ClipRRect(
-                   borderRadius: BorderRadius.circular(12),
-                   child: Image.network(
-                     product[index].thumbnail!,
-                     height: 90,
-                     width: 90,
-                     fit: BoxFit.cover,
-                   ),
-                 ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.network(
+                    product[index].thumbnail!,
+                    height: 90,
+                    width: 90,
+                    fit: BoxFit.cover,
+                  ),
+                ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
@@ -67,15 +68,11 @@ class ProductCardWidget extends StatelessWidget {
                     ],
                   ),
                 ),
-
-                
               ],
             );
           },
         ),
-        
       ),
-      
     );
   }
 }

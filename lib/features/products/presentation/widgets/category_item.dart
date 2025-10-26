@@ -21,7 +21,10 @@ class CategoryItem extends StatelessWidget {
           MaterialPageRoute(
             builder: (_) => BlocProvider.value(
                 value: context.read<ToggleFavoriteCartCubit>(),
-                child: SearchPage(selectedCategory: categoryLabel)),
+                child: SearchPage(
+                  selectedCategory: categoryLabel,
+                  isInCategoryItem: true,
+                )),
           ),
         );
       },
