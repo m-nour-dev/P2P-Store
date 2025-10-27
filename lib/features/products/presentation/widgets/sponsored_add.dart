@@ -17,7 +17,7 @@ class SponsoredAdd extends StatelessWidget {
                 value: context.read<ToggleFavoriteCartCubit>(),
                 child: SearchPage(
                     selectedCategory:
-                        'mens-shoes')), 
+                        'mens-shoes',isInCategoryItem: true,)), 
           ),
         );
       },

@@ -73,7 +73,7 @@ class DealCard extends StatelessWidget {
                 value: context.read<ToggleFavoriteCartCubit>(),
                 child: SearchPage(
                     selectedCategory:
-                        'mens-shirts')), 
+                        'mens-shirts',isInCategoryItem: true,)), 
           ),
         );},
                     style: ElevatedButton.styleFrom(

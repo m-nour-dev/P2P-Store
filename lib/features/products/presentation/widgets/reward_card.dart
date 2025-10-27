@@ -82,7 +82,7 @@ class RewardCard extends StatelessWidget {
                               value: context.read<ToggleFavoriteCartCubit>(),
                               child: SearchPage(
                                   selectedCategory:
-                                      'womens-shoes')),
+                                      'womens-shoes',isInCategoryItem: true,)),
                         ),
                       );
                     },

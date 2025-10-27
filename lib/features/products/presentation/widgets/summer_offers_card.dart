@@ -79,7 +79,7 @@ class SummerOffersCard extends StatelessWidget {
                                         context.read<ToggleFavoriteCartCubit>(),
                                     child: SearchPage(
                                         selectedCategory:
-                                            'sunglasses')),
+                                            'sunglasses',isInCategoryItem: true,)),
                               ),
                             );
                           },

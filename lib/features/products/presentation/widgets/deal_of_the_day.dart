@@ -27,8 +27,9 @@ class DealOfTheDay extends StatelessWidget {
                   builder: (_) => BlocProvider.value(
                       value: context.read<ToggleFavoriteCartCubit>(),
                       child: SearchPage(
-                          selectedCategory:
-                              'groceries')), 
+                        selectedCategory: 'groceries',
+                        isInCategoryItem: true,
+                      )),
                 ),
               );
             },

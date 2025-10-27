@@ -27,7 +27,7 @@ class TrendingProductsBar extends StatelessWidget {
                 value: context.read<ToggleFavoriteCartCubit>(),
                 child: SearchPage(
                     selectedCategory:
-                        'beauty')),
+                        'beauty',isInCategoryItem: true,)),
           ),
         );},
             icon: Icon(Icons.arrow_forward_outlined),
